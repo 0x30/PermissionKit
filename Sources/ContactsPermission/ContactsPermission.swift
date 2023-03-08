@@ -37,3 +37,15 @@ public struct ContactsPermission: PermissionProtocol {
 
     public typealias StatusType = CNAuthorizationStatus
 }
+
+extension CNAuthorizationStatus: StatusType {
+    public var warp: PermissionKit.Permissions.Status {
+        switch self {
+        case .authorized: return .authorized
+        case .denied: return .denied
+        case .notDetermined: return .notDetermined
+        case .restricted: return .denied
+        @unknown default: return .denied
+        }
+    }
+}

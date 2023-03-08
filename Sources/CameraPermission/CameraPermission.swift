@@ -47,3 +47,15 @@ public struct CameraPermission: PermissionProtocol {
 
     public typealias StatusType = AVAuthorizationStatus
 }
+
+extension AVAuthorizationStatus: StatusType {
+    public var warp: PermissionKit.Permissions.Status {
+        switch self {
+        case .authorized: return .authorized
+        case .denied: return .denied
+        case .notDetermined: return .notDetermined
+        case .restricted: return .denied
+        @unknown default: return .denied
+        }
+    }
+}

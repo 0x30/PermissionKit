@@ -128,3 +128,17 @@ class LocationPermissionRequester: NSObject, CLLocationManagerDelegate {
         manager.delegate = nil
     }
 }
+
+extension CLAuthorizationStatus: StatusType {
+    public var warp: PermissionKit.Permissions.Status {
+        switch self {
+        case .authorized: return .authorized
+        case .denied: return .denied
+        case .notDetermined: return .notDetermined
+        case .restricted: return .denied
+        case .authorizedAlways: return .authorized
+        case .authorizedWhenInUse: return .authorized
+        @unknown default: return .denied
+        }
+    }
+}

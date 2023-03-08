@@ -56,3 +56,16 @@ public struct PhotosPermission: PermissionProtocol {
 
     public typealias StatusType = PHAuthorizationStatus
 }
+
+extension PHAuthorizationStatus: StatusType {
+    public var warp: PermissionKit.Permissions.Status {
+        switch self {
+        case .authorized: return .authorized
+        case .denied: return .denied
+        case .notDetermined: return .notDetermined
+        case .restricted: return .denied
+        case .limited: return .authorized
+        @unknown default: return .denied
+        }
+    }
+}

@@ -5,8 +5,8 @@
 //  Created by 荆文征 on 2023/3/8.
 //
 
-import PermissionKit
 import AppTrackingTransparency
+import PermissionKit
 
 public extension Permissions {
     @available(iOS 14, *)
@@ -36,4 +36,17 @@ public struct TrackingPermission: PermissionProtocol {
     }
 
     public typealias StatusType = ATTrackingManager.AuthorizationStatus
+}
+
+@available(iOS 14, *)
+extension ATTrackingManager.AuthorizationStatus: StatusType {
+    public var warp: PermissionKit.Permissions.Status {
+        switch self {
+        case .authorized: return .authorized
+        case .denied: return .denied
+        case .notDetermined: return .notDetermined
+        case .restricted: return .denied
+        @unknown default: return .denied
+        }
+    }
 }

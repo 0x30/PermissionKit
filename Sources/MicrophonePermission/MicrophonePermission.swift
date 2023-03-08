@@ -35,3 +35,14 @@ public struct MicrophonePermission: PermissionProtocol {
 
     public typealias StatusType = AVAudioSession.RecordPermission
 }
+
+extension AVAudioSession.RecordPermission: StatusType {
+    public var warp: PermissionKit.Permissions.Status {
+        switch self {
+        case .granted: return .authorized
+        case .denied: return .denied
+        case .undetermined: return .notDetermined
+        @unknown default: return .denied
+        }
+    }
+}

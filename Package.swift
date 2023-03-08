@@ -38,6 +38,11 @@ let package = Package(
             name: "Photos",
             targets: ["PhotosPermission"]
         ),
+        .library(
+            name: "Notification",
+            targets: ["NotificationPermission"]
+        ),
+
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -71,6 +76,10 @@ let package = Package(
         ),
         .target(
             name: "PhotosPermission",
+            dependencies: ["PermissionKit"]
+        ),
+        .target(
+            name: "NotificationPermission",
             dependencies: ["PermissionKit"]
         ),
     ]
