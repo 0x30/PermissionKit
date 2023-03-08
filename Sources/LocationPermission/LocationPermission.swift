@@ -62,16 +62,10 @@ public extension LocationPermission {
     }
 
     func reqAccuracy(withPurposeKey: String, completion: @escaping (CLAccuracyAuthorization) -> Void) {
-        if accuracyAuthorization == .fullAccuracy {
-            completion(accuracyAuthorization)
-        } else {
-            CLLocationManager().requestTemporaryFullAccuracyAuthorization(withPurposeKey: withPurposeKey) { _ in
-                completion(self.accuracyAuthorization)
-            }
-        }
+        LocationPermissionRequester.requestTemporaryFullAccuracyAuthorization(withPurposeKey: withPurposeKey, complete: completion)
     }
 
-    func reqAccuracy(withPurposeKey key: String) async -> CLAccuracyAuthorization {
+    @MainActor func reqAccuracy(withPurposeKey key: String) async -> CLAccuracyAuthorization {
         await withUnsafeContinuation { contin in
             self.reqAccuracy(withPurposeKey: key) { status in
                 contin.resume(returning: status)
@@ -122,6 +116,23 @@ class LocationPermissionRequester: NSObject, CLLocationManagerDelegate {
             complete(status)
         }
         requester.manager.requestAlwaysAuthorization()
+    }
+
+    @available(iOS 14.0, *)
+    static func requestTemporaryFullAccuracyAuthorization(withPurposeKey: String, complete: @escaping (CLAccuracyAuthorization) -> Void) {
+        let requester = LocationPermissionRequester()
+
+        /// 如果已经授信了 还要求会报错
+        if requester.manager.accuracyAuthorization == .fullAccuracy {
+            complete(.fullAccuracy)
+            return
+        }
+
+        requesters.insert(requester)
+        requester.manager.requestTemporaryFullAccuracyAuthorization(withPurposeKey: withPurposeKey) { _ in
+            requesters.remove(requester)
+            complete(requester.manager.accuracyAuthorization)
+        }
     }
 
     deinit {
