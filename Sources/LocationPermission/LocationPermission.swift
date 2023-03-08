@@ -43,10 +43,10 @@ public struct LocationPermission: PermissionProtocol {
         LocationPermissionRequester.requestAlwaysAuthorization(complete: completion)
     }
 
-    /// Always22
+    /// Always
     public func reqAlwaysStatus() async -> CLAuthorizationStatus {
         await withUnsafeContinuation { contin in
-            self.reqStatus { status in
+            self.reqAlwaysStatus { status in
                 contin.resume(returning: status)
             }
         }
