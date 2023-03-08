@@ -30,7 +30,7 @@ public struct LocationPermission: PermissionProtocol {
     }
 
     /// WhenInUse
-    public func reqStatus() async -> CLAuthorizationStatus {
+    @MainActor public func reqStatus() async -> CLAuthorizationStatus {
         await withUnsafeContinuation { contin in
             self.reqStatus { status in
                 contin.resume(returning: status)
@@ -44,7 +44,7 @@ public struct LocationPermission: PermissionProtocol {
     }
 
     /// Always
-    public func reqAlwaysStatus() async -> CLAuthorizationStatus {
+    @MainActor public func reqAlwaysStatus() async -> CLAuthorizationStatus {
         await withUnsafeContinuation { contin in
             self.reqAlwaysStatus { status in
                 contin.resume(returning: status)

@@ -27,7 +27,7 @@ public struct CameraPermission: PermissionProtocol {
         reqStatus(for: .video, completion: completion)
     }
 
-    public func reqStatus() async -> AVAuthorizationStatus {
+    @MainActor public func reqStatus() async -> AVAuthorizationStatus {
         await reqStatus(for: .video)
     }
 
@@ -37,7 +37,7 @@ public struct CameraPermission: PermissionProtocol {
         }
     }
 
-    public func reqStatus(for type: AVMediaType) async -> AVAuthorizationStatus {
+    @MainActor public func reqStatus(for type: AVMediaType) async -> AVAuthorizationStatus {
         await withUnsafeContinuation { contin in
             self.reqStatus(for: type) { status in
                 contin.resume(returning: status)

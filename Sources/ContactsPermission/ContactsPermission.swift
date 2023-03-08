@@ -27,7 +27,7 @@ public struct ContactsPermission: PermissionProtocol {
         }
     }
 
-    public func reqStatus() async -> CNAuthorizationStatus {
+    @MainActor public func reqStatus() async -> CNAuthorizationStatus {
         await withUnsafeContinuation { contin in
             self.reqStatus { status in
                 contin.resume(returning: status)
