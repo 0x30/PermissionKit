@@ -5,13 +5,12 @@
 //  Created by 荆文征 on 2023/3/8.
 //
 
+import AVKit
 import PermissionKit
 
-import AVCaptureDevice
-
 public extension Permissions {
-    static var Contacts: CameraPermission {
-        return ContactsPermission()
+    static var Camera: CameraPermission {
+        return CameraPermission()
     }
 }
 
@@ -25,22 +24,14 @@ public struct CameraPermission: PermissionProtocol {
     }
 
     public func reqStatus(completion: @escaping (AVAuthorizationStatus) -> Void) {
-        let store = CNContactStore()
-        AVCaptureDevice.requestAccess(for: AVMediaType.video) { _ in
-            completion(self.status)
-        }
+        reqStatus(for: .video, completion: completion)
     }
 
     public func reqStatus() async -> AVAuthorizationStatus {
-        await withUnsafeContinuation { contin in
-            self.reqStatus { status in
-                contin.resume(returning: status)
-            }
-        }
+        await reqStatus(for: .video)
     }
 
     public func reqStatus(for type: AVMediaType, completion: @escaping (AVAuthorizationStatus) -> Void) {
-        let store = CNContactStore()
         AVCaptureDevice.requestAccess(for: type) { _ in
             completion(self.status(for: type))
         }
