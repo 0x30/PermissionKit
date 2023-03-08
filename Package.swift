@@ -15,31 +15,31 @@ let package = Package(
             targets: ["PermissionKit"]
         ),
         .library(
-            name: "Contacts",
+            name: "ContactsPermission",
             targets: ["ContactsPermission"]
         ),
         .library(
-            name: "Location",
+            name: "LocationPermission",
             targets: ["LocationPermission"]
         ),
         .library(
-            name: "Tracking",
+            name: "TrackingPermission",
             targets: ["TrackingPermission"]
         ),
         .library(
-            name: "Microphone",
+            name: "MicrophonePermission",
             targets: ["MicrophonePermission"]
         ),
         .library(
-            name: "Camera",
+            name: "CameraPermission",
             targets: ["CameraPermission"]
         ),
         .library(
-            name: "Photos",
+            name: "PhotosPermission",
             targets: ["PhotosPermission"]
         ),
         .library(
-            name: "Notification",
+            name: "NotificationPermission",
             targets: ["NotificationPermission"]
         ),
 
