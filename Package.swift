@@ -5,11 +5,39 @@ import PackageDescription
 
 let package = Package(
     name: "PermissionKit",
+    platforms: [
+        .iOS(.v13),
+    ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "PermissionKit",
-            targets: ["PermissionKit"]),
+            targets: ["PermissionKit"]
+        ),
+        .library(
+            name: "Contacts",
+            targets: ["ContactsPermission"]
+        ),
+        .library(
+            name: "Location",
+            targets: ["LocationPermission"]
+        ),
+        .library(
+            name: "Tracking",
+            targets: ["TrackingPermission"]
+        ),
+        .library(
+            name: "Microphone",
+            targets: ["MicrophonePermission"]
+        ),
+        .library(
+            name: "Camera",
+            targets: ["CameraPermission"]
+        ),
+        .library(
+            name: "Photos",
+            targets: ["PhotosPermission"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -19,10 +47,31 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "PermissionKit",
-            dependencies: []),
-        .testTarget(
-            name: "PermissionKitTests",
-            dependencies: ["PermissionKit"]),
+            name: "PermissionKit"
+        ),
+        .target(
+            name: "ContactsPermission",
+            dependencies: ["PermissionKit"]
+        ),
+        .target(
+            name: "LocationPermission",
+            dependencies: ["PermissionKit"]
+        ),
+        .target(
+            name: "TrackingPermission",
+            dependencies: ["PermissionKit"]
+        ),
+        .target(
+            name: "MicrophonePermission",
+            dependencies: ["PermissionKit"]
+        ),
+        .target(
+            name: "CameraPermission",
+            dependencies: ["PermissionKit"]
+        ),
+        .target(
+            name: "PhotosPermission",
+            dependencies: ["PermissionKit"]
+        ),
     ]
 )
