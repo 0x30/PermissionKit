@@ -153,3 +153,13 @@ extension CLAuthorizationStatus: StatusType {
         }
     }
 }
+
+extension CLAccuracyAuthorization: StatusType {
+    public var warp: PermissionKit.Permissions.Status {
+        switch self {
+        case .fullAccuracy: return .authorized
+        case .reducedAccuracy: return .denied
+        @unknown default: return .denied
+        }
+    }
+}

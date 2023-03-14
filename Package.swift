@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "PermissionKit",
+    
     platforms: [
         .iOS(.v13),
     ],
@@ -13,6 +14,10 @@ let package = Package(
         .library(
             name: "PermissionKit",
             targets: ["PermissionKit"]
+        ),
+        .library(
+            name: "PermissionKit.ContactsPermission",
+            targets: ["ContactsPermission"]
         ),
         .library(
             name: "ContactsPermission",
