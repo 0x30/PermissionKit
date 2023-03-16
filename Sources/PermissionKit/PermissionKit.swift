@@ -12,10 +12,10 @@ public protocol PermissionProtocol {
 
 public enum Permissions {
     @objc public enum Status: Int, CustomStringConvertible {
-        case authorized
-        case denied
-        case notDetermined
-        case notSupported
+        case authorized = 3
+        case denied = 2
+        case notDetermined = 1
+        case notSupported = 0
 
         public var authorized: Bool {
             return self == .authorized
