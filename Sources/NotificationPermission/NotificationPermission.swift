@@ -18,11 +18,9 @@ public struct NotificationPermission: PermissionProtocol {
     public var status: UNAuthorizationStatus {
         var notificationSettings: UNNotificationSettings?
         let semaphore = DispatchSemaphore(value: 0)
-        DispatchQueue.global().async {
-            UNUserNotificationCenter.current().getNotificationSettings { setttings in
-                notificationSettings = setttings
-                semaphore.signal()
-            }
+        UNUserNotificationCenter.current().getNotificationSettings { setttings in
+            notificationSettings = setttings
+            semaphore.signal()
         }
         semaphore.wait()
         return notificationSettings!.authorizationStatus
@@ -30,7 +28,9 @@ public struct NotificationPermission: PermissionProtocol {
 
     public func reqStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
         UNUserNotificationCenter.current().requestAuthorization { _, _ in
-            completion(self.status)
+            DispatchQueue.main.async {
+                completion(self.status)
+            }
         }
     }
 
@@ -44,7 +44,9 @@ public struct NotificationPermission: PermissionProtocol {
 
     public func reqStatus(options: UNAuthorizationOptions, completion: @escaping (UNAuthorizationStatus) -> Void) {
         UNUserNotificationCenter.current().requestAuthorization(options: options) { _, _ in
-            completion(self.status)
+            DispatchQueue.main.async {
+                completion(self.status)
+            }
         }
     }
 
